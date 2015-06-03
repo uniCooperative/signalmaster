@@ -156,8 +156,7 @@ io.sockets.on('connection', function (client) {
 		secure: 1
 	};
 
-	request.post({url: 'https://api.xirsys.com/getIceServer', form: credentials}, function (err, resp, body) {
-			console.log(body);
+	request.post('https://api.xirsys.com/getIceServers', {form: credentials}, function (err, resp, body) {
 			if (!err) {
 				var data = {};
 				data = JSON.parse(body) || {};
@@ -169,27 +168,6 @@ io.sockets.on('connection', function (client) {
 			else 
 				client.emit('stunservers', []);
 		});
-
-
-	// tell client about stun and turn servers and generate nonces
-	//client.emit('stunservers', config.stunservers || []);
-
-	// create shared secret nonces for TURN authentication
-	// the process is described in draft-uberti-behave-turn-rest
-	//var credentials = [];
-	/*config.turnservers.forEach(function (server) {
-		var hmac = crypto.createHmac('sha1', server.secret);
-	// default to 86400 seconds timeout unless specified
-	var username = Math.floor(new Date().getTime() / 1000) + (server.expiry || 86400) + "";
-	hmac.update(username);
-	credentials.push({
-	username: username,
-	credential: hmac.digest('base64'),
-	url: server.url
-	});
-	});
-	*/
-	//client.emit('turnservers', credentials);
 });
 
 if (config.uid) process.setuid(config.uid);
