@@ -57,7 +57,7 @@ function safeCb(cb) {
 io.sockets.on('connection', function (client) {
 	client.resources = {
 		screen: false,
-		video: false,
+		video: true,
 		audio: false
 	};
 
